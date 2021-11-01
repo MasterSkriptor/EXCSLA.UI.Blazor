@@ -1,0 +1,41 @@
+﻿@namespace EXCSLA.UI.Blazor.Controls
+
+<SpinLoader IsLoading="Items == null" Center="true" Spinner="SpinnerType.Chase" Color="#206994">
+    <LoadingTemplate>
+        <BSContainer>
+            <BSRow>
+                <BSCol SM="12" Class="pb-3 pt-3">
+                    <Chase Color="#206994" Center="true" Size="60px" />
+                </BSCol>
+            </BSRow>
+        </BSContainer>
+    </LoadingTemplate>
+    <FaultedContentTemplate>
+        Loading Report Bar failed...
+    </FaultedContentTemplate>
+    <ContentTemplate>
+        <BSContainer>
+            <BSRow>
+                <BSCol SM="12" Class="pb-3 pt-3">
+                    <BSCard CardType="CardType.Deck">
+                        @if (Items != null)
+                        {
+                            @foreach (var item in Items)
+                            {
+
+                                var selected = item.Key == SelectedItem;
+
+                                <BSCard Class="@ColorPicker.GetBorderCss(item.Key, selected)" @onclick="(async () => await HandleOnSelectedItemChanged(item.Key))">
+                                    <BSCard CardType="CardType.Body" Class="@ColorPicker.GetBackgroundCss(item.Key, selected)">
+                                        <BSCard CardType="CardType.Text" Class="@ColorPicker.GetTextCss(item.Key, selected)">@item.Key</BSCard>
+                                        <BSCard CardType="CardType.Text" Class="@ColorPicker.GetTextCss(item.Key, selected)">@item.Value</BSCard>
+                                    </BSCard>
+                                </BSCard>
+                            }
+                        }
+                    </BSCard>
+                </BSCol>
+            </BSRow>
+        </BSContainer>
+    </ContentTemplate>
+</SpinLoader>
